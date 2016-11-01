@@ -2,7 +2,13 @@ import { Component } from '@angular/core';
 
 @Component({
   selector: 'rb-root',
-  templateUrl: './app.component.html'
+  template: `
+    <rb-header></rb-header>
+    <div class="container">
+      <router-outlet></router-outlet>    
+    </div>
+
+`
 })
 export class AppComponent {
 
