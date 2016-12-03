@@ -1,10 +1,11 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { Recipe } from '../recipe'
 
 @Component({
   selector: 'rb-recipe-item',
   template:`
-  <div  class="list-group-item clearfix">
+  
+  <a [routerLink]="[recipeId]"  class="list-group-item clearfix" routerLinkActive="active">
     <div class="pull-left">
       <h4 class="list-group-item-heading">{{ recipe.name}}</h4>
       <p class="list-group-item-text">{{recipe.description}}</p>
@@ -16,17 +17,15 @@ import { Recipe } from '../recipe'
         class="img-responsive"
         style=" height: 100px ">
     </span>
-  </div>
+
+  </a>
 
 `
 })
-export class RecipeItemComponent implements OnInit {
+export class RecipeItemComponent  {
   @Input() recipe: Recipe;
-  recipeId: number;
+  @Input() recipeId: number;
 
-  constructor() { }
 
-  ngOnInit() {
-  }
 
 }

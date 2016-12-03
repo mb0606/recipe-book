@@ -1,4 +1,4 @@
-import {Component, OnInit, Output, EventEmitter} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import { Recipe } from '../recipe';
 import {RecipeService} from "../recipe.service";
 
@@ -7,13 +7,13 @@ import {RecipeService} from "../recipe.service";
   template:`
   <div class="row">
     <div class="col-xs-12">
-      <a class="btn btn-default">New Recipe</a>
+      <a class="btn btn-default" [routerLink]="['new']">New Recipe</a>
     </div>
   </div>
   <div class="row">
     <div class="col-xs-12">
       <ul class="list-group">
-        <rb-recipe-item *ngFor="let recipe of recipes" [recipe]="recipe" (click)="onSelected(recipe)"></rb-recipe-item>
+        <rb-recipe-item *ngFor="let recipe of recipes; let i = index" [recipe]="recipe" [recipeId]="i"></rb-recipe-item>
       </ul>
     </div>
   </div>
@@ -21,17 +21,16 @@ import {RecipeService} from "../recipe.service";
 })
 export class RecipeListComponent implements OnInit {
   recipes: Recipe[] = [];
-  @Output() recipeSelected = new EventEmitter<Recipe>();
 
   constructor(private recipeService: RecipeService) { }
 
   ngOnInit() {
     this.recipes = this.recipeService.getRecipes();
+    this.recipeService.recipesChanged.subscribe(
+      (recipes: Recipe[]) => this.recipes = recipes
+    )
   }
 
-  onSelected(recipe: Recipe){
-    console.log(recipe)
-    this.recipeSelected.emit(recipe);
-  }
+
 
 }
