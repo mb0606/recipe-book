@@ -8,6 +8,7 @@ import {FormArray,
         FormGroup,
         Validators,
         FormBuilder} from "@angular/forms";
+import {Location} from '@angular/common';
 
 @Component({
   selector: 'rb-recipe-edit',
@@ -135,7 +136,8 @@ export class RecipeEditComponent implements OnInit, OnDestroy {
   constructor(private route:ActivatedRoute,
               private recipeService: RecipeService,
               private formBuilder: FormBuilder,
-              private router: Router) { }
+              private router: Router,
+              private location: Location) { }
 
   ngOnInit() {
     this.subscription = this.route.params.subscribe(
@@ -162,8 +164,10 @@ export class RecipeEditComponent implements OnInit, OnDestroy {
     }
     this.navigateBack();
   }
+
   private navigateBack() {
-    this.router.navigate(['../']);
+    // this.router.navigate(['../']);
+    this.location.back();
   }
   onCancel(){
     this.navigateBack();
@@ -211,7 +215,7 @@ export class RecipeEditComponent implements OnInit, OnDestroy {
       recipeName = this.recipe.name;
       recipeImageUrl = this.recipe.imagePath;
       recipeContent = this.recipe.description;
-    }
+    } // IF
     this.recipeForm = this.formBuilder.group({
       name: [recipeName, Validators.required],
       imagePath: [recipeImageUrl, Validators.required],
